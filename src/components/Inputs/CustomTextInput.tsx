@@ -6,7 +6,7 @@ import { Color } from '../../utils/globalstyles'
 const CustomTextInput = ({title, placeholder, value, onChangeText, error}:any) => {
   return (
    <View style={[styles.input, {borderColor:error?Color.error:Color.black}]}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={[styles.title, {color:error?Color.error:Color.black}]}>{title}{error && `*`}</Text>
     <TextInput placeholder={placeholder} value={value} onChangeText={(txt)=>onChangeText(txt)} />
    </View>
   )

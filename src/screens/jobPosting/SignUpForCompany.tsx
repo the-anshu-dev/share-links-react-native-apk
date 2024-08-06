@@ -64,38 +64,54 @@ const SignUpForCompany = ({navigation}: any) => {
       validFirstName = false;
       setFirstNameError('Please enter valid first name');
       console.log('Error 2');
-    } else if (firstName != '' && firstName.length >= 3 && !firstName.toString().match(nameRegex)) {
+    } else if (
+      firstName != '' &&
+      firstName.length >= 3 &&
+      !firstName.toString().match(nameRegex)
+    ) {
       validFirstName = false;
       setFirstNameError('No special character allowed');
       console.log('Error 3');
-    } else if (firstName != '' && firstName.length >= 3 && firstName.toString().match(nameRegex)) {
+    } else if (
+      firstName != '' &&
+      firstName.length >= 3 &&
+      firstName.toString().match(nameRegex)
+    ) {
       validFirstName = true;
       setFirstNameError('');
     }
 
-     // Last Name
-     if (lastName == '') {
+    // Last Name
+    if (lastName == '') {
       validLastName = false;
       setLastNameError('Please enter laste name');
     } else if (lastName != '' && lastName.length < 3) {
       validLastName = false;
       setLastNameError('Please enter valid laste name');
-    } else if (lastName != '' && lastName.length >= 3 && !lastName.toString().match(nameRegex)) {
+    } else if (
+      lastName != '' &&
+      lastName.length >= 3 &&
+      !lastName.toString().match(nameRegex)
+    ) {
       validLastName = false;
       setLastNameError('No special character allowed');
-    } else if (lastName != '' && lastName.length >= 3 && lastName.toString().match(nameRegex)) {
+    } else if (
+      lastName != '' &&
+      lastName.length >= 3 &&
+      lastName.toString().match(nameRegex)
+    ) {
       validLastName = true;
       setLastNameError('');
     }
 
     // Email
-     if (email == '') {
+    if (email == '') {
       validEmail = false;
-      setEmailError('Please enter email name');
+      setEmailError('Please enter email');
     } else if (email != '' && !email.toString().match(emailRegex)) {
       validEmail = false;
       setEmailError('Please enter valid email ');
-    }  else if (email != '' && email.toString().match(emailRegex)) {
+    } else if (email != '' && email.toString().match(emailRegex)) {
       validEmail = true;
       setEmailError('');
     }
@@ -104,28 +120,102 @@ const SignUpForCompany = ({navigation}: any) => {
     if (contact == '') {
       validContact = false;
       setContactError('Please enter contact number ');
-    } else if (contact != '' && contact.length<10) {
+    } else if (contact != '' && contact.length < 10) {
       validContact = false;
       setContactError('Please enter valid contact ');
-    }else if (contact != '' && contact.length>=10 && !contact.toString().match(mobileNumberRegex)) {
+    } else if (
+      contact != '' &&
+      contact.length >= 10 &&
+      !contact.toString().match(mobileNumberRegex)
+    ) {
       validContact = false;
       setContactError('Please enter valid contact ');
-    }  else if (contact != '' && contact.length>=10 && contact.toString().match(mobileNumberRegex)) {
+    } else if (
+      contact != '' &&
+      contact.length >= 10 &&
+      contact.toString().match(mobileNumberRegex)
+    ) {
       validContact = true;
       setContactError('');
     }
 
+    //Company Name
+    if (companyName == '') {
+      validCompanyName = false;
+      setCompanyNameError('Please enter company name');
+    } else if (companyName != '' && companyName.length < 3) {
+      validCompanyName = false;
+      setCompanyNameError('Please enter valid company name');
+    } else if (
+      companyName != '' &&
+      companyName.length >= 3 &&
+      !companyName.toString().match(nameRegex)
+    ) {
+      validCompanyName = false;
+      setCompanyNameError('No special character allowed');
+    } else if (
+      companyName != '' &&
+      companyName.length >= 3 &&
+      companyName.toString().match(nameRegex)
+    ) {
+      validCompanyName = true;
+      setCompanyNameError('');
+    }
 
+    //Address
+    if (address == '') {
+      validAddress = false;
+      setAddressError('Please enter address');
+    } else if (address != '' && address.length < 3) {
+      validAddress = false;
+      setAddressError('Please enter valid address');
+    } else if (
+      address != '' &&
+      address.length >= 3 &&
+      !address.toString().match(nameRegex)
+    ) {
+      validAddress = false;
+      setAddressError('No special character allowed');
+    } else if (
+      address != '' &&
+      address.length >= 3 &&
+      address.toString().match(nameRegex)
+    ) {
+      validAddress = true;
+      setAddressError('');
+    }
 
+    //Password
+    if (password == '') {
+      validPassword = false;
+      setPassowordError('Please enter password');
+    } else if (password != '' && password.length < 6) {
+      validPassword = false;
+      setPassowordError('Please enter min 6 characters');
+    } else if (password != '' && password.length >= 6) {
+      validPassword = true;
+      setPassowordError('');
+    }
 
+    return (
+      validAddress &&
+      validCompanyName &&
+      validContact &&
+      validEmail &&
+      validFirstName &&
+      validLastName &&
+      validPassword
+    );
   };
 
   // Validate()
 
   const handleSingUp = () => {
     console.log('SignUp Btn Pressed');
-    Toast.show('SignUp Btn Pressed', Toast.SHORT);
-    if (Validate()) {
+    if (!Validate()) {
+      Toast.show('Please validate all field', Toast.SHORT);
+    } else {
+      Toast.show('Ready to Register', Toast.SHORT);
     }
   };
   const handleLogin = () => {
@@ -171,11 +261,7 @@ const SignUpForCompany = ({navigation}: any) => {
             setEmail(txt);
           }}
         />
-         {emailError != '' && (
-          <Text style={styles.erroMsg}>{emailError}</Text>
-        )}
-
-
+        {emailError != '' && <Text style={styles.erroMsg}>{emailError}</Text>}
 
         <CustomTextInput
           title="Contact"
@@ -186,7 +272,7 @@ const SignUpForCompany = ({navigation}: any) => {
             setConatct(txt);
           }}
         />
-         {contactError != '' && (
+        {contactError != '' && (
           <Text style={styles.erroMsg}>{contactError}</Text>
         )}
         {/* 12369 */}
@@ -194,26 +280,39 @@ const SignUpForCompany = ({navigation}: any) => {
           title="Company Name"
           placeholder="Google, Microsoft,..."
           value={companyName}
+          error={companyNameError != '' ? true : false}
           onChangeText={(txt: any) => {
             setCompanyName(txt);
           }}
         />
+        {companyNameError != '' && (
+          <Text style={styles.erroMsg}>{companyNameError}</Text>
+        )}
         <CustomTextInput
           title="Address"
           placeholder="198/53 Street, Delhi..."
           value={address}
+          error={addressError != '' ? true : false}
           onChangeText={(txt: any) => {
             setAddress(txt);
           }}
         />
+        {addressError != '' && (
+          <Text style={styles.erroMsg}>{addressError}</Text>
+        )}
+
         <CustomTextInput
           title="Password"
           placeholder="******"
           value={password}
+          error={passwordError != '' ? true : false}
           onChangeText={(txt: any) => {
             setPassoword(txt);
           }}
         />
+        {passwordError != '' && (
+          <Text style={styles.erroMsg}>{passwordError}</Text>
+        )}
         <CustomSolidBtn title="SignUp" onClick={handleSingUp} />
         <CustomBorderBtn title="Login" onClick={handleLogin} />
       </ScrollView>

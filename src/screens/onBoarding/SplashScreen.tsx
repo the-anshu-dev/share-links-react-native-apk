@@ -7,12 +7,12 @@ import { moderateScale, moderateVerticalScale } from 'react-native-size-matters'
 import { useEffect } from 'react';
 
 const SplashScreen = ({navigation}:any) => {
-  useEffect(()=>{
-    setTimeout(()=>{
-      navigation.navigate(Navigate.SELECT_USER)
-    },2000)
+  // useEffect(()=>{
+  //   setTimeout(()=>{
+  //     navigation.navigate(Navigate.SELECT_USER)
+  //   },2000)
 
-  },[])
+  // },[])
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/logo.png')} style={styles.logo} />
